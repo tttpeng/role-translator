@@ -1,0 +1,18 @@
+{
+  "name": "role-translator",
+  "version": "1.0.0",
+  "description": "职能沟通翻译助手 - 帮助产品经理和开发工程师更好地理解彼此",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "openai": "^4.76.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,239 @@
+/* 优化输出结果的排版样式 */
+.prose {
+  color: #334155;
+  max-width: none;
+}
+
+/* 增强标题层级和间距 */
+.prose h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #0f172a;
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.prose h1:first-child {
+  margin-top: 0;
+}
+
+.prose h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #1e293b;
+  margin-top: 1.125rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid #3b82f6;
+}
+
+.prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #334155;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 段落间距和行高 */
+.prose p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.65;
+  font-size: 0.9375rem;
+}
+
+/* 列表样式优化 */
+.prose ul {
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
+  line-height: 1.65;
+}
+
+.prose ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.prose ol {
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.prose ol li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-top: 0.375rem;
+  margin-bottom: 0.375rem;
+  line-height: 1.65;
+}
+
+.prose ol li::before {
+  content: counter(list-item) '.';
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: inherit;
+}
+
+/* 嵌套列表 */
+.prose ul ul,
+.prose ol ul,
+.prose ul ol,
+.prose ol ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 强调文本 */
+.prose strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.prose em {
+  color: #475569;
+  font-style: italic;
+}
+
+/* 代码块 */
+.prose code {
+  background-color: #f1f5f9;
+  color: #dc2626;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, monospace;
+}
+
+.prose pre {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+/* 引用块 */
+.prose blockquote {
+  border-left: 4px solid #94a3b8;
+  padding-left: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: #475569;
+  font-style: italic;
+  background-color: #f8fafc;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* 分隔线 */
+.prose hr {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* 链接样式 */
+.prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: #1d4ed8;
+}
+
+/* 表格样式 */
+.prose table {
+  width: 100%;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-collapse: collapse;
+}
+
+.prose th {
+  background-color: #f1f5f9;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+}
+
+.prose td {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+.prose tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+/* 给整个输出容器增加内边距和背景 */
+#result-content-doc,
+#result-content-chat {
+  padding: 1rem 1.5rem !important;
+  background-color: #ffffff !important;
+  line-height: 1.65;
+}
+
+/* 加载提示的打字光标动画 */
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* 淡入动画 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}

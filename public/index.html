@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>职能沟通翻译助手</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Marked.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <!-- Logo SVG -->
+        <svg class="h-9 w-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <!-- 圆角方形背景 -->
+          <rect x="4" y="4" width="40" height="40" rx="8" fill="url(#logoGradient)"/>
+          <!-- 双向转换箭头 -->
+          <g stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- 上方向右箭头 -->
+            <path d="M14 18H30M30 18L26 14M30 18L26 22"/>
+            <!-- 下方向左箭头 -->
+            <path d="M34 30H18M18 30L22 26M18 30L22 34"/>
+          </g>
+        </svg>
+        <div>
+          <div class="text-xl font-semibold">职能沟通翻译助手</div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="mx-auto flex h-[calc(100vh-4rem)] max-w-7xl px-4 py-6">
+    <div class="grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
+      <!-- Left: Input -->
+      <section class="flex h-full flex-col rounded-xl border bg-white shadow-sm overflow-hidden">
+        <div class="flex-shrink-0 border-b px-5 py-4">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <h2 class="text-sm font-semibold mb-3">选择翻译方向</h2>
+              <!-- Direction Selection - Card Style -->
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  id="btn-pm-to-dev"
+                  class="group relative rounded-lg border-2 border-blue-500 bg-blue-50 p-3 text-left transition-all hover:border-blue-600 hover:shadow-md"
+                  data-direction="pm-to-dev"
+                  type="button"
+                  aria-pressed="true"
+                >
+                  <div class="text-sm font-semibold text-slate-900 mb-1">我是产品经理</div>
+                  <div class="text-xs text-slate-600">把需求翻译给开发</div>
+                </button>
+
+                <button
+                  id="btn-dev-to-pm"
+                  class="group relative rounded-lg border-2 border-slate-200 bg-white p-3 text-left transition-all hover:border-blue-500 hover:shadow-md"
+                  data-direction="dev-to-pm"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  <div class="text-sm font-semibold text-slate-900 mb-1">我是开发工程师</div>
+                  <div class="text-xs text-slate-600">把技术翻译给产品</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-5 py-4">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-medium text-slate-600">原始内容（必填）</label>
+            <button
+              id="btn-example"
+              type="button"
+              class="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-800"
+            >
+              填入示例
+            </button>
+          </div>
+          <textarea
+            id="input-content"
+            class="mt-2 min-h-[160px] w-full resize-y rounded-lg border px-3 py-2 text-sm outline-none focus:border-slate-400"
+            placeholder="例如：我们需要一个智能推荐功能，提升用户停留时长"
+          ></textarea>
+          <div class="mt-1 flex justify-between text-xs text-slate-500">
+            <span id="char-count">0 / 10000</span>
+          </div>
+
+          <!-- Mode Selection -->
+          <div class="mt-4 space-y-3">
+            <div class="text-xs font-medium text-slate-600 mb-2">翻译模式</div>
+
+            <!-- 快速直出 -->
+            <label class="flex items-start gap-3 rounded-lg border-2 border-slate-200 bg-white p-3 cursor-pointer hover:border-slate-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
+              <input type="radio" name="mode" value="direct" class="mt-1 h-4 w-4 text-blue-600" checked />
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-slate-900">⚡ 快速直出</span>
+                  <span class="text-xs text-slate-500">(1步, ~30秒)</span>
+                </div>
+                <p class="mt-1 text-xs text-slate-600">
+                  直接生成结果，不提问。适合：你已提供详细背景信息。
+                </p>
+              </div>
+            </label>
+
+            <!-- 智能补齐 -->
+            <label class="flex items-start gap-3 rounded-lg border-2 border-slate-200 bg-white p-3 cursor-pointer hover:border-slate-400 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
+              <input type="radio" name="mode" value="interactive" class="mt-1 h-4 w-4 text-blue-600" />
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-slate-900">🎯 智能补齐</span>
+                  <span class="text-xs text-slate-500">(2步, 追问后更准确)</span>
+                  <span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">推荐</span>
+                </div>
+                <p class="mt-1 text-xs text-slate-600">
+                  AI先提3个关键问题，再生成最终稿。适合：需求还比较模糊，想要高质量输出。
+                </p>
+              </div>
+            </label>
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-5 flex justify-end">
+            <button
+              id="btn-start"
+              type="button"
+              class="rounded-lg bg-slate-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-slate-800 transition-colors"
+            >
+              开始翻译
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Output -->
+      <section class="flex h-full flex-col rounded-xl border bg-white shadow-sm overflow-hidden">
+        <!-- Welcome State -->
+        <div id="welcome-state" class="flex flex-1 items-center justify-center p-8">
+          <div class="text-center">
+            <div class="text-6xl mb-4">📝</div>
+            <h2 class="text-lg font-semibold mb-2">欢迎使用职能沟通翻译助手</h2>
+            <p class="text-sm text-slate-500 mb-6">选择翻译方向，输入内容，点击翻译按钮开始</p>
+            <div class="space-y-3 text-left max-w-sm mx-auto">
+              <div class="flex items-center gap-3 text-sm">
+                <span class="text-2xl">⚡</span>
+                <span><strong>快速直出</strong>：直接生成结果</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <span class="text-2xl">🎯</span>
+                <span><strong>智能补齐</strong>：先提问再生成，更准确</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Questions Panel (Two-call mode) -->
+        <div id="questions-panel" class="hidden flex flex-col h-full">
+          <div class="flex-shrink-0 border-b bg-gradient-to-r from-blue-50 to-purple-50 px-5 py-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-sm font-semibold text-slate-900">需要补齐的信息</h2>
+                <p class="mt-1 text-xs text-slate-600">
+                  <span class="inline-flex items-center">
+                    <span class="mr-1 h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                    必答题需优先填写
+                  </span>
+                  <span class="mx-2 text-slate-400">·</span>
+                  <span class="inline-flex items-center">
+                    <span class="mr-1 h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                    建议题可选填
+                  </span>
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-slate-700 shadow-sm">
+                  多选题目
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-1 overflow-y-auto bg-slate-50 px-5 py-4">
+            <div id="questions-container" class="space-y-4">
+              <!-- 动态填充问题 -->
+            </div>
+
+            <div class="mt-6 rounded-lg border border-dashed border-slate-300 bg-white p-4">
+              <div class="flex items-start gap-3">
+                <svg class="h-5 w-5 flex-shrink-0 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div class="flex-1 text-xs text-slate-600">
+                  <p class="font-medium text-slate-700">💡 提示</p>
+                  <ul class="mt-1 space-y-1 text-slate-600">
+                    <li>• 可以选择多个选项来补充完整的上下文</li>
+                    <li>• 如果预设选项都不合适，可以勾选"其他"自行输入</li>
+                    <li>• 跳过问题将使用 AI 的默认假设生成结果</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="sticky bottom-0 mt-5 flex flex-wrap items-center justify-end gap-3 bg-gradient-to-t from-slate-50 pt-4">
+              <button
+                id="btn-skip"
+                type="button"
+                class="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50 hover:border-slate-400"
+              >
+                跳过问题
+              </button>
+              <button
+                id="btn-submit-answers"
+                type="button"
+                class="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-lg"
+              >
+                提交答案并生成
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Panel -->
+        <div id="result-panel" class="hidden flex flex-col h-full">
+          <div class="flex-shrink-0 border-b px-5 py-4">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h2 class="text-sm font-semibold">输出</h2>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <!-- 停止生成按钮 -->
+                <button
+                  id="btn-stop"
+                  type="button"
+                  class="hidden rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+                >
+                  ⏹ 停止生成
+                </button>
+                <button
+                  id="btn-copy"
+                  type="button"
+                  class="rounded-lg border bg-white px-3 py-2 text-sm hover:bg-slate-50"
+                >
+                  复制
+                </button>
+              </div>
+            </div>
+
+            <!-- Quality Hint Bar -->
+            <div
+              id="quality-hint"
+              class="mt-3 hidden rounded-lg border bg-slate-50 px-3 py-2 text-xs text-slate-700"
+            >
+              <span>可落地性：<strong id="quality-level">未评估</strong></span>
+              <span class="mx-2 text-slate-300">|</span>
+              <span id="quality-gaps">缺口：-</span>
+            </div>
+
+          </div>
+
+          <div class="flex-1 overflow-y-auto px-5 py-4 relative">
+            <div
+              id="result-content-doc"
+              class="h-full rounded-lg border bg-slate-50 p-4 text-sm prose prose-sm max-w-none overflow-y-auto"
+            ></div>
+
+            <!-- 回到底部按钮 -->
+            <button
+              id="scroll-to-bottom-btn"
+              class="hidden absolute bottom-8 right-8 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 rounded-full p-3 shadow-lg transition-all duration-200 hover:shadow-xl"
+              title="回到底部"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/20 backdrop-blur-sm">
+    <div class="rounded-xl bg-white p-6 shadow-lg">
+      <div class="flex items-center gap-4">
+        <div class="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900"></div>
+        <div id="loading-text" class="text-sm font-medium">正在生成中...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden rounded-lg bg-slate-900 px-4 py-3 text-sm text-white shadow-lg"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
